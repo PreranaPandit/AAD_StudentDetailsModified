@@ -9,7 +9,15 @@
     android:backgroundTint="#87D1C8"
     tools:context=".MainActivity">
 
-
+    <TextView
+        android:id="@+id/tvDOB"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:hint="Select Date"
+        android:textSize="20dp"
+        android:layout_marginLeft="20dp"
+        android:textStyle="bold"
+        />
 
     <EditText
         android:id="@+id/etName"
