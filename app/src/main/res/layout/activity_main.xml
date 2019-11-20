@@ -9,6 +9,8 @@
     android:backgroundTint="#87D1C8"
     tools:context=".MainActivity">
 
+
+
     <EditText
         android:id="@+id/etName"
        android:layout_height="wrap_content"

@@ -1,7 +1,9 @@
 package com.example.aad_studentdetails;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,6 +41,10 @@ public class MainActivity extends AppCompatActivity  {
     //TextView referencing
     TextView tvOutput, tvName, tvGender, tvCountry, tvBatch;
 
+    //AlertButtons
+
+    AlertDialog.Builder builder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +65,7 @@ public class MainActivity extends AppCompatActivity  {
         tvCountry = (TextView) findViewById(R.id.tvCountry);
         tvBatch = (TextView) findViewById(R.id.tvBatch);
 
-
+       builder = new AlertDialog.Builder(this);
 
         //passing an array to the countries in spinner
         String countries[] = {"Nepal","India","China","Pakistan","US","UK","Bangladesh","Russia","Spain","Germany"};
@@ -97,26 +103,49 @@ public class MainActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
 
+             builder.setMessage("Do you want to close studentdetails app?")
+                     .setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                 @Override
+                 public void onClick(DialogInterface dialog, int which) {
+                     tvName.setText("Name : "+ etName.getText().toString());
+                     tvCountry.setText("Country : " + spinCountry.getSelectedItem().toString());
+                     tvBatch.setText("Batch : " + autoCompleteTextView.getText().toString());
 
-                tvName.setText("Name : "+ etName.getText().toString());
-                tvCountry.setText("Country : " + spinCountry.getSelectedItem().toString());
-                tvBatch.setText("Batch : " + autoCompleteTextView.getText().toString());
+
+                     int selectedID = rdoGroup.getCheckedRadioButtonId();
+                     gender = findViewById(selectedID);
+                     switch (gender.getId()) {
+                         case R.id.rdobtnMale:
+                             tvGender.setText("Gender : " + rdobtnMale.getText().toString());
+                             break;
+                         case R.id.rdobtnFemale:
+                             tvGender.setText("Gender : " + rdobtnFemale.getText().toString());
+                             break;
+                         case R.id.rdobtnOthers:
+                             tvGender.setText("Gender : " + rdobtnOthers.getText().toString());
+                             break;
+
+                     }
 
 
-                int selectedID = rdoGroup.getCheckedRadioButtonId();
-                gender = findViewById(selectedID);
-                switch (gender.getId()) {
-                    case R.id.rdobtnMale:
-                        tvGender.setText("Gender : " + rdobtnMale.getText().toString());
-                        break;
-                    case R.id.rdobtnFemale:
-                        tvGender.setText("Gender : " + rdobtnFemale.getText().toString());
-                        break;
-                    case R.id.rdobtnOthers:
-                        tvGender.setText("Gender : " + rdobtnOthers.getText().toString());
-                        break;
+                 }
+             })
+                     .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                         @Override
+                         public void onClick(DialogInterface dialog, int which) {
 
-                }
+                             //Action for no button
+                             dialog.cancel();
+
+                             Toast.makeText(getApplicationContext(),"No is clicked",Toast.LENGTH_SHORT).show();
+                         }
+                     });
+
+             //creating dialog box
+                AlertDialog alert = builder.create();
+                alert.setTitle("Student Details");
+                     alert.show();
+
             }
 
 
